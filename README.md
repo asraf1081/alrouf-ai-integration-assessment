@@ -1,1 +1,53 @@
-Project Title: Alrouf AI Integration Engineer Assessment📋 OverviewThis repository contains the implementation of the three tasks required for the AI Integration Engineer assessment. The systems are designed with a focus on cost-effectiveness, offline safety, and high performance.🚀 Task Details🔹 Task 1: RFQ Automation SystemObjective: Automatically capture and process incoming RFQ emails instantly without manual intervention.Workflow Summary:Trigger: A Custom Mailhook captures the email subject, sender, body, and attached files.Parsing: Uses built-in JSON parsing to extract item, quantity, contact_name, and location. This avoids AI token costs and ensures 100% data integrity.Database Logging: Logs extracted data into the "RFQ Logs" Google Sheet, localized to Riyadh time.CRM Mock: Sends an HTTP POST request to a mock CRM endpoint containing Opportunity Name, Product, and Quantity.Auto-Reply: Automatically drafts and sends a professional bilingual (Arabic and English) email back to the client.File Archiving: An Iterator separates email attachments and uploads them directly to an "RFQ Attachments" Google Drive folder.Alerts: Sends a final notification to the #rfq-alerts Slack channel with the client's name and requested item.🔹 Task 2: Quotation MicroserviceObjective: A high-performance RESTful API to handle lighting product quotations and automated email drafting.Requirements & Tech Stack:FastAPI & Uvicorn: For rapid endpoint creation and high-speed serving.Pydantic: To enforce strict data types and reject invalid inputs.Docker: To guarantee environmental parity between development and production.Key Deliverables:Core logic is isolated in app/services.py for maintainability.Applies the formula $unit\_cost \times (1 + margin\_pct) \times qty$ to line items, rounding to two decimal places.Features a Mock LLM Switch for local/offline testing, easily swappable to the OpenAI API via a .env file.Accessible via an interactive Swagger UI at http://120.0.0.1:8000/docs.🔹 Task 3: AI Knowledge Base (RAG System)Objective: A bilingual Retrieval-Augmented Generation (RAG) system allowing users to query company policies with cited responses.Requirements & Tech Stack:LangChain: Acts as the framework connecting documents to the AI model.FAISS: A local vector database for instant searching.HuggingFace: Multilingual local embeddings using paraphrase-multilingual-MiniLM-L12-v2.Groq: Connects to the Llama 3.1-8b-instant model for high-speed cloud inference.Streamlit: Powers the web UI.Key Deliverables:Documents are split into 500-character chunks with a 50-character overlap to preserve context.Vectorization runs at 0 cost locally, avoiding API fees.Generates responses with a total user latency of under 1.5 seconds per query.Executed by running py ingest.py to build the database, followed by streamlit run app.py to launch the app.
+# Project Title: Alrouf AI Integration Engineer Assessment
+
+## 📋 Overview
+This repository contains the complete implementation of the three tasks required for the AI Integration Engineer assessment, designed with a focus on cost‑effectiveness, offline safety, and maintainability.
+
+---
+
+## 🚀 Task Details
+
+### 🔹 Task 1: RFQ Automation System
+* **Objective:** Automate incoming RFQ emails the second they are received without manual intervention[cite: 5].
+* **Requirements:**
+    * Make.com webhook (Custom Mailhook)
+    * Google Sheets for database logging.
+    * Google Drive for attachment archiving.
+    * Slack for internal notifications.
+    * Gmail for auto-replies.
+* **Key Deliverables:**
+    * Extracts fields like item, quantity, contact_name, and location via built-in JSON parsing to ensure 100% precision.
+    * Logs data to the "RFQ Logs" Google Sheet, localized to Riyadh time.
+    * Sends a mock CRM payload using an HTTP POST request containing the Opportunity Name, Product, and Quantity.
+    * Sends a professionally drafted bilingual auto-reply in Arabic and English using raw HTML formatting.
+    * Iterates and uploads separate email files to an "RFQ Attachments" Google Drive folder.
+    * Triggers a final alert to the #rfq-alerts Slack channel featuring the client name and requested item.
+
+### 🔹 Task 2: Quotation Microservice
+* **Objective:** Provide a RESTful API built with FastAPI to handle lighting product quotations, automated margin calculations, and an AI-powered email drafting feature.
+* **Requirements:**
+    * FastAPI and Uvicorn for endpoints and high-speed serving.
+    * Pydantic for strict data type validation.
+    * OpenAI and python-dotenv for AI integration and security.
+    * Docker to ensure parity between development and production environments.
+* **Key Deliverables:**
+    * Isolates core calculation logic within app/services.py for maintainability.
+    * Calculates line items using the formula unit_cost * (1 + margin_pct) * qty, rounding the grand total to two decimal places.
+    * Contains a Mock LLM Switch that utilizes a local template for offline testing, while remaining prepared to connect to OpenAI via a .env file.
+    * Verifies a 20% margin calculation on a 100 unit cost for 120 items (totaling 14,400) using pytest.
+    * Exposes an interactive Swagger UI for testing at http://120.0.0.1:8000/docs.
+
+### 🔹 Task 3: AI Knowledge Base (RAG System)
+* **Objective:** Provide a production-ready, bilingual (English and Arabic) Retrieval-Augmented Generation system allowing users to query company policies with cited responses.
+* **Requirements:**
+    * Langchain ecosystem (langchain, langchain-community, langchain-core).
+    * FAISS (faiss-cpu) to store text chunks as math vectors.
+    * HuggingFace sentence-transformers for local, zero-cost processing.
+    * Groq (langchain-groq) to connect to the Llama 3.1 model.
+    * Streamlit for the web user interface.
+* **Key Deliverables:**
+    * Loads and splits documents into 500-character chunks with a 50-character overlap.
+    * Generates local vector embeddings for $0.00 cost using the HuggingFace paraphrase-multilingual-MiniLM-L12-v2 model.
+    * Leverages the Llama 3.1-8b-instant model via Groq for high-speed cloud generation.
+    * Maintains a total user latency of < 1.5 seconds per query.
+    * Runs utilizing an ingest.py script to build the FAISS index and an app.py script to launch the bilingual assistant.
