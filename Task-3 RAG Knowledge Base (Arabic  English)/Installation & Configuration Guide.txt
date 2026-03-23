@@ -1,0 +1,51 @@
+Environment Setup
+First, ensure you are in the alrouf-rag-ai directory and have your virtual environment active.
+
+Create Environment: py -m venv .venv
+
+Activate Environment: .venv\Scripts\activate
+
+
+2. Install Dependencies
+Run these commands in order to install the necessary libraries for the RAG pipeline:
+
+Core Framework: pip install langchain langchain-community langchain-core
+
+Purpose: Acts as the "glue" connecting your documents to the AI model.
+
+Vector Database: pip install faiss-cpu
+
+Purpose: Stores the text chunks as math vectors for instant searching.
+
+Local Embeddings: pip install sentence-transformers langchain-huggingface
+
+Purpose: Downloads the multilingual model to your PC for $0.00 cost processing.
+
+Cloud Inference: pip install langchain-groq
+
+Purpose: Connects to the Llama 3.1 model via Groq.
+
+Web Interface: pip install streamlit
+
+Purpose: Powers the minimal web UI for the user.
+
+Security: pip install python-dotenv
+
+Purpose: Securely loads the GROQ_API_KEY from your .env file.
+
+
+3. API Configuration
+Create a file named .env in the root folder and add your key as seen in the dashboard:
+GROQ_API_KEY=gsk_VQOjW...
+
+
+4. Execution Steps
+To run the system, follow these two steps:
+
+Ingest Data: py ingest.py
+
+This reads the 3 policy files, chunks the text, and creates the FAISS index.
+
+Launch Web UI: streamlit run app.py
+
+This opens the browser interface for English and Arabic Q&A.

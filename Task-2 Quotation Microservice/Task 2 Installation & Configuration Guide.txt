@@ -1,0 +1,44 @@
+Task 2: Installation & Configuration Guide
+This project provides a RESTful API built with FastAPI to handle lighting product quotations. It includes automated margin calculations and an AI-powered email drafting feature.
+
+1. Environment Setup
+Ensure you are in the alrouf-quote-api directory.
+
+Create Environment: py -m venv .venv
+
+Activate Environment: .venv\Scripts\activate
+
+2. Install Dependencies
+Run this command to install the lightweight, high-performance stack used for this API:
+
+Web Framework: pip install fastapi uvicorn
+
+Purpose: FastAPI builds the endpoints; Uvicorn serves the application with lightning speed.
+
+Data Validation: pip install pydantic
+
+Purpose: Ensures that the data sent to the API (prices, product names) is formatted correctly.
+
+AI Integration: pip install openai
+
+Purpose: Powers the "Draft Email" feature to turn technical quotes into professional customer messages.
+
+Security: pip install python-dotenv
+
+Purpose: Securely loads API keys from your .env file.
+
+3. API Configuration
+Create a file named .env in the root folder of Task 2. Even if you are using a mock for the review, including this shows "Production Readiness":
+
+Plaintext
+OPENAI_API_KEY=your_openai_key_here
+4. Execution Steps
+To launch the API and access the interactive documentation:
+
+Start the Server: ```powershell
+uvicorn main:app --reload
+
+Access Swagger UI:
+Open your browser to http://120.0.0.1:8000/docs.
+
+This allows the reviewer to test the 20% margin calculation and the email generation without writing any code.
