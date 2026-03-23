@@ -1,0 +1,8 @@
+For creating Scenarios Flow 
+--> https://eu1.make.com/
+
+2. Automate incoming web requests
+-->https://webhook.site/
+
+3. Send internal alert to Slack 
+-->https://app.slack.com/
